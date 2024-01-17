@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const fs = require("fs");
 const bmiHistoryPath = path.join(__dirname, "..", "data", "bmiHistory.json");
 function loadBmiHistory() {
   try {
@@ -10,12 +11,12 @@ function loadBmiHistory() {
     return [];
   }
 }
+
 router.get("/calculator", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "views", "bmiCalculator.html"));
 });
 
 router.get("/history", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "views", "history.html"));
+  res.send(loadBmiHistory());
 });
-
 module.exports = router;

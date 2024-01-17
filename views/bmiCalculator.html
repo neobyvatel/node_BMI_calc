@@ -61,9 +61,6 @@
                 >Calculator</a
               >
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/bmi/history">History</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -98,8 +95,36 @@
         <h1>BMI index:</h1>
         <h6 id="result">0.00</h6>
       </div>
+      <div id="resultContainer" class="mt-4">
+        <h2>BMI History</h2>
+        <ul id="bmiHistoryList" class="list-group"></ul>
+      </div>
     </div>
     <script>
+      function loadBMIHistory() {
+        fetch("/bmi/history")
+          .then((response) => response.json())
+          .then((history) => {
+            const historyList = document.getElementById("bmiHistoryList");
+
+            // Clear existing list items
+            historyList.innerHTML = "";
+
+            // Populate the list with BMI history
+            history.forEach((entry) => {
+              const listItem = document.createElement("li");
+              listItem.textContent = `Date: ${entry.date}, BMI: ${entry.bmi}`;
+              historyList.appendChild(listItem);
+            });
+
+            // Display the resultContainer
+            document.getElementById("resultContainer").style.display = "block";
+          })
+          .catch((error) => console.error("Error loading BMI history:", error));
+      }
+
+      loadBMIHistory();
+
       document
         .getElementById("bmiForm")
         .addEventListener("submit", function (event) {
