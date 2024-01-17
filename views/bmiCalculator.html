@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- Bootstrap JS and Popper.js CDN (optional, for Bootstrap components that require JavaScript) -->
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-U1sURgPg3AWsX8XVlHs8FkLz1lPeThzIA8lRBjgDI1zZYmNEmvjI4o6eOmjWXKXl"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      defer
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JcKbLqahcj6+UK8MyH5Un5cRvyX1El5xLeB9yDEYpI2tCs3cyoD8+AheNa8M6pfc"
+      crossorigin="anonymous"
+    ></script>
+    <title>BMI Calculator</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.svg" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">BMIcalculator</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="/bmi/calculator"
+                >Calculator</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/bmi/history">History</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h2>BMI Calculator</h2>
+      <form id="bmiForm" action="/bmi/calculator" method="post">
+        <div class="form-group">
+          <label for="height">Height(in meters):</label>
+          <input
+            type="text"
+            class="form-control"
+            id="height"
+            name="height"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="weight">Weight(in kgs):</label>
+          <input
+            type="text"
+            class="form-control"
+            id="weight"
+            name="weight"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Calculate BMI</button>
+      </form>
+      <div>
+        <h1>BMI index:</h1>
+        <h6 id="result">0.00</h6>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("bmiForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          fetch("/bmi/calculator", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(new FormData(this)),
+          })
+            .then((response) => response.text())
+            .then((result) => {
+              document.getElementById("result").textContent = `${result}`;
+              document.getElementById("resultContainer").style.display =
+                "block";
+            })
+            .catch((error) => console.error("Error:", error));
+        });
+    </script>
+  </body>
+</html>
