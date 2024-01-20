@@ -5,10 +5,6 @@ This web application calculates Body Mass Index (BMI) based on user-provided hei
 ## Features
 
 - **BMI Calculation:** The application calculates BMI using the formula: BMI = weight / (height * height).
-- **BMI Categories:** Based on the calculated BMI, the user is categorized as underweight, normal weight, overweight, or obese.
-- **User-Friendly Interface:** Simple and intuitive user interface for entering height and weight values.
-- **Error Handling:** Graceful handling of invalid input with appropriate error messages.
-- **Responsive Design:** The web app is designed to be responsive, ensuring a seamless experience across various devices.
 
 ## Installation
 
@@ -20,8 +16,9 @@ This web application calculates Body Mass Index (BMI) based on user-provided hei
 2. Redirect to the repository folder
 3. Install dependencies
   ```bash
-  npm install express nodemon
+  npm install 
 ```
+This will install packages listed in package.json (devDependencies)
 
 4. run the dev server:
   ```bash
